@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/newblog.css' %}">
+  </head>
+  <body>
+    <header class="header">
+      <a href="#" class="logo"><span>b</span>logger</a>
+
+      <nav class="navbar">
+        <a href="/index">banner</a>
+        <a href="index#posts">Our blogs</a>
+        <a href="index#contact">contact us</a>
+        <a href="newblog">New Blog</a>
+      </nav>
+
+      <div class="icons">
+        <i class="fas fa-bars" id="menu-bars"></i>
+        <i class="fas fa-search" id="search-icon"></i>
+      </div>
+
+      <!-- <form action="POST" class="search-form"> -->
+        <input
+          type="search"
+          name="text"
+          placeholder="search here..."
+          id="search-box"
+        />
+        <label for="search-box" class="fas fa-search"></label>
+      <!-- </form> -->
+    </header>
+    <section>
+      <form method="post" action="/newblog">
+        {% csrf_token %}
+        <!-- {{ form }} -->
+        <div class="form-div">
+          <h1 >Add a New Blog !!!</h1>
+          <input type="text" name="author" placeholder="Author Name" required />
+
+          <input type="text" name="title" placeholder="Enter the title here" required />
+          <textarea
+            name="content"
+            id="blog-content"
+            cols="30"
+            rows="10"
+            placeholder="Enter the content of the blog here"
+          ></textarea>    
+          <button type="submit">Submit</button>
+                
+        </div>
+      </form>
+    </section>
+  </body>
+  <script src="{% static 'js/script.js' %}"></script> 
+</html>
