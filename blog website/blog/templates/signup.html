@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="{% static 'css/login.css' %}" />
   </head>
   <body>
-    <!-- header section starts  -->
+
 
     <header class="header">
       <a href="#" class="logo"><span>b</span>logger</a>
@@ -28,12 +28,13 @@
         <a href="#posts">Our blogs</a>
         <a href="#contact">contact us</a>
         <a href="newblog">New Blog</a>
+
       </nav>
 
-      <div class="icons">
+      {% comment %} <div class="icons">
         <i class="fas fa-bars" id="menu-bars"></i>
         <i class="fas fa-search" id="search-icon"></i>
-      </div>
+      </div> {% endcomment %}
 
       <form action="" method="POST" class="search-form">
         <input
@@ -46,6 +47,25 @@
       </form>
     </header>
     <div class="login-form-bd">
+
+        {% if messages %}
+          
+      {% for message in messages %}
+      <div class="msg-container">
+        <div class="inner-container">
+          <span class="">
+            <i class="fas fa-bell"></i>
+            {{ message }}
+          </span>
+          <button class="cross-btn" onclick="closeAlert(event)">
+            <span>&times;</span>
+        
+          </button>
+        </div>     
+      </div>
+      {% endfor %}
+    {% endif %}
+
       <div class="form-wrapper">
         <div class="form-container">
           <h1>Register</h1>
@@ -99,6 +119,14 @@
 
     <script>
       const labels = document.querySelectorAll(".form-control label");
+
+      let closeAlert=(event)=>{
+        let element = event.target;
+        while(element.nodeName !== "BUTTON"){
+          element = element.parentNode;
+        }
+        element.parentNode.parentNode.removeChild(element.parentNode);
+      }
 
       labels.forEach((label) => {
         label.innerHTML = label.innerText

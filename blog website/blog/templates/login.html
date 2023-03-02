@@ -12,13 +12,18 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;500;600900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- custom css file link  -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+
   </head>
   <body>
-    <!-- header section starts  -->
+
 
     <header class="header">
       <a href="#" class="logo"><span>b</span>logger</a>
@@ -28,12 +33,14 @@
         <a href="#posts">Our blogs</a>
         <a href="#contact">contact us</a>
         <a href="newblog">New Blog</a>
+
+       
       </nav>
 
-      <div class="icons">
+      {% comment %} <div class="icons">
         <i class="fas fa-bars" id="menu-bars"></i>
         <i class="fas fa-search" id="search-icon"></i>
-      </div>
+      </div> {% endcomment %}
 
       <form action="" method="POST" class="search-form">
         {% csrf_token %}
@@ -47,6 +54,23 @@
       </form>
     </header>
     <div class="login-form-bd">
+      {% if messages %}
+        
+    {% for message in messages %}
+    <div class="msg-container">
+      <div class="inner-container">
+        <span class="">
+          <i class="fas fa-bell"></i>
+          {{ message }}
+        </span>
+        <button class="cross-btn" onclick="closeAlert(event)">
+          <span>&times;</span>
+      
+        </button>
+      </div>     
+    </div>
+    {% endfor %}
+  {% endif %}
       <div class="form-wrapper">
         <div class="form-container">
           <h1>Login</h1>
@@ -82,6 +106,13 @@
 
     <script>
       const labels = document.querySelectorAll(".form-control label");
+      let closeAlert=(event)=>{
+        let element = event.target;
+        while(element.nodeName !== "BUTTON"){
+          element = element.parentNode;
+        }
+        element.parentNode.parentNode.removeChild(element.parentNode);
+      }
 
       labels.forEach((label) => {
         label.innerHTML = label.innerText

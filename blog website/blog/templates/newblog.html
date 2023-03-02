@@ -9,8 +9,10 @@
   
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/newblog.css' %}">
+    {% comment %} <link rel="stylesheet" href="{% static 'css/newblog.css' %}"> {% endcomment %}
   </head>
   <body>
+
     <header class="header">
       <a href="#" class="logo"><span>b</span>logger</a>
 
@@ -19,24 +21,45 @@
         <a href="index#posts">Our blogs</a>
         <a href="index#contact">contact us</a>
         <a href="newblog">New Blog</a>
+
       </nav>
 
-      <div class="icons">
+
+      {% comment %} <div class="icons">
         <i class="fas fa-bars" id="menu-bars"></i>
         <i class="fas fa-search" id="search-icon"></i>
-      </div>
+      </div> {% endcomment %}
 
       <!-- <form action="POST" class="search-form"> -->
-        <input
+        {% comment %} <input
           type="search"
           name="text"
           placeholder="search here..."
           id="search-box"
         />
-        <label for="search-box" class="fas fa-search"></label>
+        <label for="search-box" class="fas fa-search"></label> {% endcomment %}
       <!-- </form> -->
     </header>
+
+
     <section>
+    {% if messages %}
+        
+    {% for message in messages %}
+    <div class="msg-container">
+      <div class="inner-container">
+        <span class="">
+          <i class="fas fa-bell"></i>
+          {{ message }}
+        </span>
+        <button class="cross-btn" onclick="closeAlert(event)">
+          <span>&times;</span>
+      
+        </button>
+      </div>     
+    </div>
+    {% endfor %}
+  {% endif %}
       <form method="post" action="/newblog">
         {% csrf_token %}
         <!-- {{ form }} -->
@@ -51,12 +74,21 @@
             cols="30"
             rows="10"
             placeholder="Enter the content of the blog here"
-          ></textarea>    
+          ></textarea>
           <button type="submit">Submit</button>
-                
         </div>
       </form>
     </section>
   </body>
   <script src="{% static 'js/script.js' %}"></script> 
+
+  <script>
+    let closeAlert=(event)=>{
+      let element = event.target;
+      while(element.nodeName !== "BUTTON"){
+        element = element.parentNode;
+      }
+      element.parentNode.parentNode.removeChild(element.parentNode);
+    }
+  </script>
 </html>

@@ -3,10 +3,12 @@ from datetime import datetime
 from .models import Data, ContactDetails
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.contrib.auth import authenticate,login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate,login, logout
+from utils.decorator import login_required_message
 
 # Create your views here.
-
+@login_required
 def index(request):
     print("Hellosdfgb")
     # print(request.me)
@@ -26,6 +28,8 @@ def index(request):
         cont.save()
     return render(request,'index.html')
 
+@login_required_message(message="Please login, inorder to view the page")
+@login_required
 def home2(request):
         
     if request.method == "POST":
@@ -62,10 +66,11 @@ def Login(request):
             print("User Is Authenticated!!")
             login(request, user)
             fname=user.first_name
-            return render(request, "index.html", {'fname':fname})
+            messages.success(request, "You have logged in successfully!")
+            return redirect('index')
         else:
             print("User Is Not Authenticated!!")
-            messages.error(request, "Wrong Credentials")
+            messages.error(request, "Wrong Credentials!")
             return redirect('login')
         
     return render(request, "login.html")
@@ -73,13 +78,47 @@ def Login(request):
 def signup(request):
     print("Entered Sign Up")
     if request.method=="POST":
+        
         username=request.POST['signup_username']
         firstname=request.POST['signup_firstname']
         lastname=request.POST['signup_lastname']
         useremail=request.POST['signup_email']
         pass1=request.POST['signup_pass']
         pass2=request.POST['signup_pass2']
+        
+        print("Checkkk1!!")
+        
+        if User.objects.filter(username=username):
+            messages.error(request, "User already exists!!")
+            return redirect('signup')
+        
+        print("Checkkk2!!")
+        
+        
+        if User.objects.filter(email=useremail):
+            messages.error(request, "Email already exists!")
+            return redirect('signup')
+        
+        print("Checkkk3!!")
+        
+        if len(username)>10:
+            messages.error(request, "Username must be below 10 characters")
+            return redirect('signup')
 
+        print("Checkkk4!!")
+
+        if pass1!=pass2:
+            messages.error(request, "Passwords din't match!")
+            return redirect('signup')
+        
+        print("Checkkk5!!")
+        
+        
+        # if not username.isalnum():
+        #     messages.error(request, "Username must be alphanumeric!")
+        #     return redirect('index')
+        
+        print("Checkkk!!")
         myuser=User.objects.create_user(username, useremail, pass1)
         myuser.first_name=firstname
         myuser.last_name=lastname
@@ -92,4 +131,6 @@ def signup(request):
     return render(request, "signup.html")
 
 def signout(request):
-    pass
+    logout(request)
+    messages.success(request, "Logged out Successfully!!")
+    return redirect('signup')
