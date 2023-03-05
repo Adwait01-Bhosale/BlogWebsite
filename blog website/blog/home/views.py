@@ -7,14 +7,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login, logout
 from utils.decorator import login_required_message
 
+
 # Create your views here.
 @login_required
-def index(request):
-    print("Hellosdfgb")
-    # print(request.me)
-    
+def index(request):    
     if request.method=="POST":
-        print("Entered in IF!!!!!")
+        # print("Entered in IF!!!!!")
         
         contact_name=request.POST['contact_name']
         contact_email=request.POST['contact_email']
@@ -30,7 +28,7 @@ def index(request):
 
 @login_required_message(message="Please login, inorder to view the page")
 @login_required
-def home2(request):
+def newblog(request):
         
     if request.method == "POST":
         print("entered in IF")
@@ -40,12 +38,11 @@ def home2(request):
         print(author_name, title, content, datetime.today())
         ins=Data(author=author_name, title=title, content=content, created_at=datetime.today())
         ins.save()
-        print("Data Saved!!!")
-        
-    else:
-        print("Hello")
+        # print("Data Saved!!!")
     return render(request, 'newblog.html')
 
+def home(request):
+    return render(request, 'home.html')
 
 def Login(request):
     
@@ -86,37 +83,21 @@ def signup(request):
         pass1=request.POST['signup_pass']
         pass2=request.POST['signup_pass2']
         
-        print("Checkkk1!!")
-        
         if User.objects.filter(username=username):
             messages.error(request, "User already exists!!")
             return redirect('signup')
-        
-        print("Checkkk2!!")
-        
         
         if User.objects.filter(email=useremail):
             messages.error(request, "Email already exists!")
             return redirect('signup')
         
-        print("Checkkk3!!")
-        
         if len(username)>10:
             messages.error(request, "Username must be below 10 characters")
             return redirect('signup')
 
-        print("Checkkk4!!")
-
         if pass1!=pass2:
             messages.error(request, "Passwords din't match!")
             return redirect('signup')
-        
-        print("Checkkk5!!")
-        
-        
-        # if not username.isalnum():
-        #     messages.error(request, "Username must be alphanumeric!")
-        #     return redirect('index')
         
         print("Checkkk!!")
         myuser=User.objects.create_user(username, useremail, pass1)
