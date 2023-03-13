@@ -18,30 +18,24 @@
       <a href="#" class="logo"><span>b</span>logger</a>
 
       <nav class="navbar">
-        <a href="index#posts">Blogs</a>
-        <a href="index#contact">contact us</a>
+
+        <a href="{% url 'index' %}">Blogs</a>
+        {% comment %} <a href="#contact">Contact us</a> {% endcomment %}
+
+        {% if user.is_authenticated %}
+             
         <a href="{% url 'signout' %}">Signout</a>
+        
+        {% else %}
 
-        <!-- <a href="newblog">New Blog</a> -->
+        <a href="{% url 'login' %}">Login</a>
+            
+        {% endif %}
+
+        {% if user.is_authenticated %}
+            <h1 style="font-size:1.5rem;padding-left: 0.5rem;padding-right: 0.5rem;">Hello, {{user.fullname}}</h1>
+        {% endif %}
       </nav>
-
-      {% comment %}
-      <div class="icons">
-        <i class="fas fa-bars" id="menu-bars"></i>
-        <i class="fas fa-search" id="search-icon"></i>
-      </div>
-      {% endcomment %}
-
-      <!-- <form action="POST" class="search-form"> -->
-      {% comment %}
-      <input
-        type="search"
-        name="text"
-        placeholder="search here..."
-        id="search-box"
-      />
-      <label for="search-box" class="fas fa-search"></label> {% endcomment %}
-      <!-- </form> -->
     </header>
 
     <section>
@@ -63,7 +57,7 @@
         <!-- {{ form }} -->
         <div class="form-div">
           <h1>Add a New Blog !!!</h1>
-          <input type="text" name="author" placeholder="Author Name" required />
+          {% comment %} <input type="text" name="author" placeholder="Author Name" required /> {% endcomment %}
 
           <input
             type="text"

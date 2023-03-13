@@ -66,6 +66,11 @@ section {
 .header .logo span {
   color: var(--orange);
 }
+.header .navbar{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
 .header .navbar a {
   color: var(--light-color);

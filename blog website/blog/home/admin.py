@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import Data
-from .models import ContactDetails
+from .models import *
 
-admin.site.register(Data)
-admin.site.register(ContactDetails)
+admin.site.register(BlogData)
+admin.site.register(ContactDetailsData)

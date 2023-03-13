@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Complete Responsive Blog Website Design Tutorial</title>
+    <title>Blog</title>
 
     <!-- font awesome cdn link  -->
     <link
@@ -38,8 +38,30 @@
       <nav class="navbar">
         <a href="#posts">Blogs</a>
         <a href="#contact">Contact us</a>
-        <a href="newblog">New Blog</a>
+        {% comment %} <a href="newblog">New Blog</a> {% endcomment %}
+
+        {% if user.is_authenticated %}
+             
+        <a href="{% url 'newblog' %}">New Blog</a>
+
+        {% endif %}
+
+        {% if user.is_authenticated %}
+             
+        <a href="{% url 'signout' %}">Signout</a>
+        
+        {% else %}
+
         <a href="{% url 'login' %}">Login</a>
+            
+        {% endif %}
+
+        
+
+        {% if user.is_authenticated %}
+            <h1 style="font-size:1.5rem;padding-left: 0.5rem;padding-right: 0.5rem;">Hello, {{user.fullname}}</h1>
+
+        {% endif %}
       </nav>
 
       {% comment %}
@@ -103,14 +125,9 @@
             <i class="far fa-clock"></i>
             <span>1st may, 2021</span>
           </div>
-          <h3 class="title">blog title goes here</h3>
+          <h3 class="title">{{ blog_title }}</h3>
           <p class="text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum
-            molestias rerum numquam, quos aut est culpa quisquam excepturi sed a
-            inventore dicta tempore consequuntur possimus magnam corporis cum
-            doloremque quasi fugiat exercitationem aliquid cupiditate pariatur.
-            Dolor laboriosam voluptatem ex praesentium magni error debitis
-            maxime alias autem distinctio. Fuga, esse velit!
+            {{ blog_data }}
           </p>
           <p class="text">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto,
@@ -183,19 +200,14 @@
           </div>
           <h3 class="title">blog title goes here</h3>
           <p class="text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum
-            molestias rerum numquam, quos aut est culpa quisquam excepturi sed a
-            inventore dicta tempore consequuntur possimus magnam corporis cum
-            doloremque quasi fugiat exercitationem aliquid cupiditate pariatur.
-            Dolor laboriosam voluptatem ex praesentium magni error debitis
-            maxime alias autem distinctio. Fuga, esse velit!
+            {{ blog_data }}
           </p>
-          <p class="text">
+          {% comment %} <p class="text">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto,
             reiciendis fugiat quas nemo quia omnis repellat obcaecati quaerat
             voluptates fuga error dicta cupiditate pariatur soluta dolorum quis
             eum quibusdam quam?
-          </p>
+          </p> {% endcomment %}
           <div class="links">
             <a href="#" class="user">
               <i class="far fa-user"></i>
@@ -299,7 +311,7 @@
         {% csrf_token %}
         <h3>contact us</h3>
         <div class="inputBox">
-          <input type="text" name="contact_name" placeholder="name" required />
+          {% comment %} <input type="text" name="contact_name" placeholder="name" required /> {% endcomment %}
           <input
             type="email"
             name="contact_email"
