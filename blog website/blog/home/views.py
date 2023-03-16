@@ -79,15 +79,30 @@ def home(request):
     
     for user in users:
         if request.user.is_authenticated:
-            data = BlogData.objects.order_by('-submitted_on')[0]
-            blog_data=data.content
-            print(blog_data)
-            blog_title=data.title
-            context_blog_data=blog_data
+            content_data = BlogData.objects.values_list('content')
+            
+            context_blog_data=[]
+            for i in range (len(content_data)):
+                context_blog_data.append(content_data[i])
+            
+            title_data = BlogData.objects.values_list('title')
+            context_blog_title=[]
+            
+            for i in range (len(title_data)):
+                context_blog_title.append(title_data[i])
+            
+            # blog_title_dict={}
+            
+            # for i in range(len(content_data)):
+            #     for j in range(len(title_data)):
+            #         blog_title_dict[title_data[j]]=content_data[i]
+            #         print(blog_title_dict[title_data[j]])
+            
+            print(context_blog_title[0])
             user['show'] = True
-            user['content'] = blog_data
+            # user['content'] = context_blog_data
             return render(request, 'home.html', context={'blog_data':context_blog_data,
-                                                         'blog_title':blog_title})
+                                                         'blog_title':context_blog_title})
         else:
             user['show'] = False
             user['content'] = "Add some Content for the blog!"
