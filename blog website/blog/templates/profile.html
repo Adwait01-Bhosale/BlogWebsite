@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/newblog.css' %}" />
+    {% comment %}
+    <link rel="stylesheet" href="{% static 'css/newblog.css' %}" />
+    {% endcomment %}
+  </head>
+  <body>
+    <header class="header">
+      <a href="#" class="logo"><span>b</span>logger</a>
+
+      <nav class="navbar">
+
+        <a href="{% url 'index' %}">Blogs</a>
+        {% comment %} <a href="#contact">Contact us</a> {% endcomment %}
+
+        {% if user.is_authenticated %}
+             
+        <a href="{% url 'signout' %}">Signout</a>
+        
+        {% else %}
+
+        <a href="{% url 'login' %}">Login</a>
+            
+        {% endif %}
+
+        {% if user.is_authenticated %}
+            <h1 style="font-size:1.5rem;padding-left: 0.5rem;padding-right: 0.5rem;">Hello, {{user.fullname}}</h1>
+        {% endif %}
+      </nav>
+    </header>
+
+    <section>
+      {% if messages %} {% for message in messages %}
+      <div class="msg-container">
+        <div class="inner-container">
+          <span class="">
+            <i class="fas fa-bell"></i>
+            {{ message }}
+          </span>
+          <button class="cross-btn" onclick="closeAlert(event)">
+            <span>&times;</span>
+          </button>
+        </div>
+      </div>
+      {% endfor %} {% endif %}
+      <form method="post" action="/newblog">
+        {% csrf_token %}
+        <!-- {{ form }} -->
+        <div class="form-div">
+          <h1>Add a New Blog !!!</h1>
+          {% comment %} <input type="text" name="author" placeholder="Author Name" required /> {% endcomment %}
+
+          <input
+            type="text"
+            name="title"
+            placeholder="Enter the title here"
+            required
+          />
+          <textarea
+            name="content"
+            id="blog-content"
+            cols="30"
+            rows="10"
+            placeholder="Enter the content of the blog here"
+          ></textarea>
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+    </section>
+  </body>
+  <script src="{% static 'js/script.js' %}"></script>
+
+  <script>
+    let closeAlert = (event) => {
+      let element = event.target;
+      while (element.nodeName !== "BUTTON") {
+        element = element.parentNode;
+      }
+      element.parentNode.parentNode.removeChild(element.parentNode);
+    };
+  </script>
+</html>

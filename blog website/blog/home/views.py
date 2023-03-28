@@ -79,7 +79,7 @@ def home(request):
     
     for user in users:
         if request.user.is_authenticated:
-            content_data = BlogData.objects.values_list('content')
+            content_data = BlogData.objects.filter(user=request.user).values_list('content')
             
             context_blog_data=[]
             for i in range (len(content_data)):
