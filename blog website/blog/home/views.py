@@ -6,44 +6,22 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login, logout
 from utils.decorator import login_required_message
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 
-
-# Create your views here.
-@login_required
-def index(request):    
-    if request.method=="POST":
-        print("Entered in IF!!!!!")
-        
-        # contact_name=request.POST['contact_name']
-        contact_email=request.POST['contact_email']
-        contact_number=request.POST['contact_number']
-        contact_subject=request.POST['contact_subject']
-        contact_message=request.POST['contact_message']
-
-        print(contact_email, contact_number, contact_subject, contact_message)
-                
-        cont=ContactDetailsData(name=request.user.fullname, email=contact_email, number=contact_number, subject=contact_subject, message=contact_message, user=request.user)
-        cont.save()
-    users = Account.objects.filter(is_admin=False).values('fullname', 'id')
-    users = list(users)
-    for user in users:
-        if request.user.is_authenticated:
-            data = BlogData.objects.order_by('-submitted_on')[0]
-            blog_data=data.content
-            blog_title=data.title
-            print(blog_data)
-            user['show'] = True
-            user['content'] = blog_data
-            return render(request,'index.html', context={'blog_data':blog_data,
-                                                         'blog_title':blog_title})
-        else:
-            user['show'] = False
-            user['content'] = "Add some Content for the blog!"
-    return render(request,'index.html')
+class my_dictionary(dict):
+ 
+  # __init__ function
+  def __init__(self):
+    self = dict()
+ 
+  # Function to add key:value
+  def add(self, key, value):
+    self[key] = value
 
 @login_required
 def newblog(request):
-        
+    
     if request.method == "POST":
         print("entered in IF")
         # author_name = request.POST['author']
@@ -80,29 +58,32 @@ def home(request):
     for user in users:
         if request.user.is_authenticated:
             content_data = BlogData.objects.filter(user=request.user).values_list('content')
-            
+            # print(request.user)
             context_blog_data=[]
             for i in range (len(content_data)):
                 context_blog_data.append(content_data[i])
             
+            print(len(context_blog_data))
             title_data = BlogData.objects.values_list('title')
             context_blog_title=[]
             
             for i in range (len(title_data)):
                 context_blog_title.append(title_data[i])
             
-            # blog_title_dict={}
+            blog_title_dict=my_dictionary()            
             
-            # for i in range(len(content_data)):
-            #     for j in range(len(title_data)):
-            #         blog_title_dict[title_data[j]]=content_data[i]
-            #         print(blog_title_dict[title_data[j]])
             
-            print(context_blog_title[0])
-            user['show'] = True
-            # user['content'] = context_blog_data
-            return render(request, 'home.html', context={'blog_data':context_blog_data,
-                                                         'blog_title':context_blog_title})
+            user['show'] = True            
+
+            for i in range(len(context_blog_data)):
+                blog_title_dict.add(context_blog_title[i][0], context_blog_data[i][0])
+            
+            print(len(blog_title_dict))
+            print(blog_title_dict)
+           
+            
+            return render(request, 'home.html', context={'blog_data':blog_title_dict,
+                                                         'admin':request.user})
         else:
             user['show'] = False
             user['content'] = "Add some Content for the blog!"
@@ -115,3 +96,28 @@ def home(request):
         print("Not logged in!")
         
     return render(request, 'home.html')
+
+
+def dashboard(request):
+    return render(request, 'dashboard.html')
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('change_password')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'change_password.html', {
+        'form': form
+    })
+    
+    
+def myblogs(request):
+    return render(request,"myblogs.html")

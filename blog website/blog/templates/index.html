@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blog Websites</title>
+    <title>Blogger</title>
 
     <!-- font awesome cdn link  -->
     <link
@@ -22,48 +22,33 @@
     <!-- custom css file link  -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <link rel="stylesheet" href="{% static 'css/login.css' %}" />
-    {% comment %}
-    <link rel="stylesheet" href="{% static 'css/newblog.css' %}" />
-    {% endcomment %}
+
   </head>
   <body>
-    <!-- header section starts  -->
-
-    {% comment %} {% include 'messages.html' %} {% block content %} {% endblock
-    %} {% endcomment %}
-
     <header class="header">
       <a href="#" class="logo"><span>b</span>logger</a>
-
+      
       <nav class="navbar">
+        <a href="{% url 'dashboard' %}">Dashboard</a>
         <a href="#posts">Blogs</a>
-        <a href="#contact">contact us</a>
-        {% if user.is_authenticated %}
-             
-        <a href="{% url 'newblog' %}">New Blog</a>
+        <a href="#contact">Contact us</a>
 
+        {% if user.is_authenticated %}
+        <a href="{% url 'newblog' %}">New Blog</a>
         {% endif %}
 
         {% if user.is_authenticated %}
-             
         <a href="{% url 'signout' %}">Signout</a>
-        
         {% else %}
 
         <a href="{% url 'login' %}">Login</a>
-            
+
         {% endif %}
         {% if user.is_authenticated %}
             <h1 style="font-size:1.5rem;padding-left: 0.5rem;padding-right: 0.5rem;">Hello, {{user.fullname}}</h1>
-
         {% endif %}
       </nav>
-
     </header>
-
-    <!-- header section ends -->
-
-    <!-- banner section starts  -->
     <section class="banner" id="banner">
       {% if messages %} {% for message in messages %}
       <div class="msg-container">
@@ -80,10 +65,9 @@
       {% endfor %} {% endif %}
 
       <div class="content">
-        <h3>explore the nature</h3>
+        <h3>Welcome to the Blog Website</h3>
         <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-          laboriosam?
+          Discover stories, thinking, and expertise from writers on any topic.
         </p>
         <a href="#" class="btn">my blogs</a>
       </div>
@@ -91,33 +75,23 @@
 
     <section class="container" id="posts">
       <div class="posts-container">
+
+        {% for title, body in blog_data %}
         <div class="post">
-          <!-- <img src="images/blog-1.jpg" alt="" class="image"> -->
-          <img src="https://picsum.photos/300/201" alt="" class="image" />
+          <img src="https://picsum.photos/300/201" alt="" class="image"/>
 
           <div class="date">
             <i class="far fa-clock"></i>
             <span>1st may, 2021</span>
           </div>
-          <h3 class="title">blog title goes here</h3>
+          <h3 class="title">{{ title }}</h3>
           <p class="text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum
-            molestias rerum numquam, quos aut est culpa quisquam excepturi sed a
-            inventore dicta tempore consequuntur possimus magnam corporis cum
-            doloremque quasi fugiat exercitationem aliquid cupiditate pariatur.
-            Dolor laboriosam voluptatem ex praesentium magni error debitis
-            maxime alias autem distinctio. Fuga, esse velit!
-          </p>
-          <p class="text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto,
-            reiciendis fugiat quas nemo quia omnis repellat obcaecati quaerat
-            voluptates fuga error dicta cupiditate pariatur soluta dolorum quis
-            eum quibusdam quam?
+            {{ content }}
           </p>
           <div class="links">
             <a href="#" class="user">
               <i class="far fa-user"></i>
-              <span>by admin</span>
+              <span>by {{admin}}</span>
             </a>
             <a href="#" class="icon">
               <i class="far fa-comment"></i>
@@ -130,135 +104,7 @@
           </div>
         </div>
 
-        <div class="post">
-          <!-- <img src="images/blog-2.jpg" alt="" class="image" /> -->
-          <img src="https://picsum.photos/300/200" alt="" class="image" />
-
-          <div class="date">
-            <i class="far fa-clock"></i>
-            <span>1st may, 2021</span>
-          </div>
-          <h3 class="title">{{ blog_title }}</h3>
-          <p class="text">
-           {{ blog_data }}
-          </p>
-          <p class="text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto,
-            reiciendis fugiat quas nemo quia omnis repellat obcaecati quaerat
-            voluptates fuga error dicta cupiditate pariatur soluta dolorum quis
-            eum quibusdam quam?
-          </p>
-          <div class="links">
-            <a href="#" class="user">
-              <i class="far fa-user"></i>
-              <span>by admin</span>
-            </a>
-            <a href="#" class="icon">
-              <i class="far fa-comment"></i>
-              <span>(45)</span>
-            </a>
-            <a href="#" class="icon">
-              <i class="far fa-share-square"></i>
-              <span>(29)</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="post">
-          <!-- <img src="images/blog-3.jpg" alt="" class="image" /> -->
-          <img src="https://picsum.photos/301/200" alt="" class="image" />
-
-          <div class="date">
-            <i class="far fa-clock"></i>
-            <span>1st may, 2021</span>
-          </div>
-          <h3 class="title">blog title goes here</h3>
-          <p class="text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum
-            molestias rerum numquam, quos aut est culpa quisquam excepturi sed a
-            inventore dicta tempore consequuntur possimus magnam corporis cum
-            doloremque quasi fugiat exercitationem aliquid cupiditate pariatur.
-            Dolor laboriosam voluptatem ex praesentium magni error debitis
-            maxime alias autem distinctio. Fuga, esse velit!
-          </p>
-          <p class="text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto,
-            reiciendis fugiat quas nemo quia omnis repellat obcaecati quaerat
-            voluptates fuga error dicta cupiditate pariatur soluta dolorum quis
-            eum quibusdam quam?
-          </p>
-          <div class="links">
-            <a href="#" class="user">
-              <i class="far fa-user"></i>
-              <span>by admin</span>
-            </a>
-            <a href="#" class="icon">
-              <i class="far fa-comment"></i>
-              <span>(45)</span>
-            </a>
-            <a href="#" class="icon">
-              <i class="far fa-share-square"></i>
-              <span>(29)</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="sidebar">
-        <div class="box">
-          <h3 class="title">about us</h3>
-          <div class="about">
-            <img src="static/images/user.png" alt="" />
-
-            <h3>TY IT Group 4</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Similique, officia.
-            </p>
-            <div class="follow">
-              <a href="#" class="fab fa-facebook-f"></a>
-              <a href="#" class="fab fa-twitter"></a>
-              <a href="#" class="fab fa-instagram"></a>
-              <a href="#" class="fab fa-linkedin"></a>
-            </div>
-          </div>
-        </div>
-
-        <div class="box">
-          <h3 class="title">categories</h3>
-          <div class="category">
-            <a href="#"> travel <span>42</span></a>
-            <a href="#"> photography <span>75</span> </a>
-            <a href="#"> technology <span>22</span> </a>
-            <a href="#"> fashion <span>17</span> </a>
-            <a href="#"> study <span>48</span> </a>
-            <a href="#"> science <span>39</span> </a>
-            <a href="#"> music <span>59</span> </a>
-            <a href="#"> public <span>12</span> </a>
-            <a href="#"> business <span>32</span> </a>
-            <a href="#"> sports <span>18</span> </a>
-          </div>
-        </div>
-
-        
-
-        <div class="box">
-          <h3 class="title">popular tags</h3>
-          <div class="tags">
-            <a href="#">travel</a>
-            <a href="#">photo</a>
-            <a href="#">science</a>
-            <a href="#">biology</a>
-            <a href="#">aliens</a>
-            <a href="#">nature</a>
-            <a href="#">mountain</a>
-            <a href="#">river</a>
-            <a href="#">camp</a>
-            <a href="#">landscape</a>
-            <a href="#">world</a>
-          </div>
-        </div>
-      </div>
+        {% endfor %}
     </section>
 
     <!-- posts section ends -->
@@ -269,6 +115,7 @@
       <form method="POST">
         {% csrf_token %}
         <h3>contact us</h3>
+        <div class="inputBoxContainer">
         <div class="inputBox">
           {% comment %} <input type="text" name="contact_name" placeholder="name" required /> {% endcomment %}
           <input
@@ -279,12 +126,12 @@
           />
         </div>
         <div class="inputBox">
-          <input
+          <!-- <input
             type="number"
             name="contact_number"
             placeholder="number"
             required
-          />
+          /> -->
           <input
             type="text"
             name="contact_subject"
@@ -292,6 +139,7 @@
             required
           />
         </div>
+      </div>
         <textarea
           name="contact_message"
           placeholder="message"
@@ -300,7 +148,7 @@
           rows="10"
           required
         ></textarea>
-        <input type="submit" value="send message" class="btn" />
+        <input type="submit" value="Send message" class="btn submit-btn" />
       </form>
     </section>
 
@@ -308,7 +156,7 @@
 
     <!-- footer section starts  -->
 
-    <section class="footer">
+    <!-- <section class="footer">
       <div class="follow">
         <a href="#" class="fab fa-facebook-f"></a>
         <a href="#" class="fab fa-twitter"></a>
@@ -319,7 +167,7 @@
       <div class="credit">
         created by <span>TY IT Group 4</span> | all rights reserved
       </div>
-    </section>
+    </section> -->
 
     <!-- footer section ends -->
 

@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Blogger</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <link rel="stylesheet" href="{% static 'css/newblog.css' %}" />
@@ -18,8 +18,8 @@
       <a href="#" class="logo"><span>b</span>logger</a>
 
       <nav class="navbar">
-
-        <a href="{% url 'index' %}">Blogs</a>
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <a href="{% url 'home' %}">Blogs</a>
         {% comment %} <a href="#contact">Contact us</a> {% endcomment %}
 
         {% if user.is_authenticated %}
@@ -71,6 +71,7 @@
             cols="30"
             rows="10"
             placeholder="Enter the content of the blog here"
+            required
           ></textarea>
           <button type="submit">Submit</button>
         </div>

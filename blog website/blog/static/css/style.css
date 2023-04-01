@@ -28,7 +28,9 @@ html {
 section {
   padding: 2rem 7%;
 }
-
+a{
+  text-decoration: none;
+}
 .btn {
   margin-top: 1rem;
   display: inline-block;
@@ -168,7 +170,7 @@ section {
 .banner .content h3 {
   font-size: 4rem;
   color: var(--black);
-  text-transform: uppercase;
+  text-transform:capitalize;
 }
 
 .banner .content p {
@@ -180,7 +182,8 @@ section {
 
 .container {
   display: grid;
-  grid-template-columns: 2.5fr 1fr;
+  padding: 4vh 10vw;
+  /* grid-template-columns: 2.5fr 1fr; */
   gap: 1.5rem;
   background: #eee;
 }
@@ -413,15 +416,21 @@ section {
   font-size: 3rem;
   text-transform: capitalize;
 }
-
-.contact form .inputBox {
-  display: flex;
+.contact form .inputBoxContainer{
+  display:flex;
   justify-content: space-between;
-  flex-wrap: wrap;
+}
+.contact form .inputBox {
+  /* display: flex; */
+  /* justify-content: space-between;
+  
+  flex-wrap: wrap; */
+  width:48%
 }
 
 .contact form .inputBox input,
 .contact form textarea {
+
   width: 100%;
   background: #eee;
   padding: 1rem;
@@ -434,7 +443,10 @@ section {
 }
 
 .contact form .inputBox input {
-  width: 49%;
+  /* width: 49%; */
+}
+.submit-btn{
+  width: 100%;
 }
 
 .footer {

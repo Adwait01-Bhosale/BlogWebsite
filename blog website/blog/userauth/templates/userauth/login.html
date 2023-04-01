@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Complete Responsive Blog Website Design Tutorial</title>
+    <title>Blogger</title>
 
     <!-- font awesome cdn link  -->
     <link
@@ -53,7 +53,7 @@
       </form>
     </header>
     <div class="login-form-bd">
-      {% if messages %}
+      {% comment %} {% if messages %}
         
     {% for message in messages %}
     <div class="msg-container">
@@ -69,15 +69,15 @@
       </div>     
     </div>
     {% endfor %}
-  {% endif %}
+  {% endif %} {% endcomment %}
       <div class="form-wrapper">
         <div class="form-container">
           <h1>Login</h1>
-          <form method="POST">
+          <form method="POST" autocomplete="nop" class="login-form">
             {% csrf_token %}
 
             {% comment %} <div class="form-control">
-              <input type="text" name="login_username" required />
+              <input type="text" name="login_username" required autocomplete="off" />
               <label> Username</label>
             </div> {% endcomment %}
 

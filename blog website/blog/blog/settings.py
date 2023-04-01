@@ -55,7 +55,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'userauth',
     'home',
+    'crispy_forms',
 ]
+CRISPY_TEMPLATE_PACK = 'uni_form'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

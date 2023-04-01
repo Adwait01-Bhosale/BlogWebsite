@@ -4,10 +4,8 @@ from .views import *
 
 urlpatterns = [
     path('',home,name="home"),
-    path('blog',index,name='index'),
-    path('index',index,name='index2'),
-    # path('login',Login,name="login"),
-    # path('signup',signup,name="signup"),
-    # path('signout',signout, name="signout"),
-    path('newblog',newblog,name='newblog')
+    path('myblog',myblogs,name='myblogs'),
+    path('newblog',newblog,name='newblog'),
+    path('dashboard',dashboard,name='dashboard'),
+    path("change_password", change_password, name="change_password"),
 ]

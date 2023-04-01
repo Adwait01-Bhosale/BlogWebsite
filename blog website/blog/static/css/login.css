@@ -1,148 +1,160 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-  }
-  
-  body {
-    font-family: "Roboto", sans-serif;
-  }
-  
-  /* FORM STYLE */
-  /* .form-wrapper {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+/* FORM STYLE */
+/* .form-wrapper {
     /* width: ; */
-  /* margin: 0 auto; */
-  /* margin-top: 10.4rem; */
-  
-  .login-form-bd {
-    background: #316498;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    overflow: hidden;
-  }
-  
-  .form-container {
-    font-family: "Poppins", sans-serif;
-    font-size: 2.125rem;
-    background: #1b1a1a;
-    padding: 5rem 2.5rem;
-    border-radius: 0.313rem;
-    /* margin: 25rem 35%; */
-    box-shadow: 3px 0.25rem 1.25rem rgba(27, 27, 27, 0.2);
-    margin-top: 10rem;
-    margin-bottom: 5rem;
-  }
+/* margin: 0 auto; */
+/* margin-top: 10.4rem; */
 
-  .msg-container{
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0;
-    height: 100vh;
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-  }
-  .msg-container .inner-container{
-    margin-top: 6vh;
-    height: 8vh;
-    width: 100%;
-    background: rgb(151, 213, 146);
-    color: black;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 2rem;
-  }
+.login-form-bd {
+  background: #316498;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
 
-  .inner-container span{
-    margin: 2rem;
-  }
-  
-  .form-container h1 {
-    text-align: center;
-    margin-bottom: 2.75rem;
-    margin-top: -1.875rem;
-    color: #ffff;
-    font-weight: normal;
-    font-size: 3rem;
-  }
-  
-  .form-container a {
-    text-decoration: none;
-    color: #e2dc20;
-  }
-  
-  .login-btn {
-    cursor: pointer;
-    display: inline-block;
-    width: 100%;
-    background: #e2dc20;
-    padding: 0.938rem;
-    font-family: inherit;
-    font-weight: 500;
-    font-size: 1.563rem;
-    color: #0d0f42;
-    border: 0;
-    border-radius: 0.313rem;
-    margin-bottom: 1.25rem;
-  }
-  
-  .login-btn:focus {
-    outline: 0;
-  }
-  
-  .login-btn:active {
-    transform: scale(0.98);
-  }
-  
-  .text {
-    margin-top: 0.938rem;
-  }
-  
-  .form-control {
-    position: relative;
-    margin: 1.25rem 0 2.5rem;
-  }
-  
-  .form-control input {
-    background: transparent;
-    border: 0;
-    border-bottom: 1px #fff solid;
-    display: block;
-    width: 100%;
-    padding: 1.25rem 0;
-    font-size: 2.125rem;
-    color: #fff;
-    margin-bottom: 5rem !important;
-  }
-  
-  .form-control input:focus {
-    outline: 0;
-    border-bottom-color: #c2c25a;
-  }
-  
-  .form-control label {
-    position: absolute;
-    top: 0.938rem;
-    left: 10;
-  }
-  
-  .form-control label span {
-    display: inline-block;
-    font-size: 2.125rem;
-    min-width: 0.313rem;
-    transition: 0.3s cubic-bezier(0.53, 0.246, 0.265, 1.66);
-  }
-  
-  .form-control input:focus + label span,
-  .form-control input:valid + label span {
-    color: #c2c25a;
-    transform: translateY(-2.875rem);
-  }
-  
+.form-container {
+  font-family: "Poppins", sans-serif;
+  font-size: 2.125rem;
+  background: #1b1a1a;
+  padding: 5rem 2.5rem;
+  border-radius: 0.313rem;
+  /* margin: 25rem 35%; */
+  box-shadow: 3px 0.25rem 1.25rem rgba(27, 27, 27, 0.2);
+  margin-top: 10rem;
+  margin-bottom: 5rem;
+}
+
+.msg-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.msg-container .inner-container {
+  margin-top: 6vh;
+  height: 8vh;
+  width: 100%;
+  background: rgb(151, 213, 146);
+  color: black;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 2rem;
+}
+
+.inner-container span {
+  margin: 2rem;
+}
+
+.form-container h1 {
+  text-align: center;
+  margin-bottom: 2.75rem;
+  margin-top: -1.875rem;
+  color: #ffff;
+  font-weight: normal;
+  font-size: 3rem;
+}
+
+.form-container a {
+  text-decoration: none;
+  color: #e2dc20;
+}
+
+.login-btn {
+  cursor: pointer;
+  display: inline-block;
+  width: 100%;
+  background: #e2dc20;
+  padding: 0.938rem;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 1.563rem;
+  color: #0d0f42;
+  border: 0;
+  border-radius: 0.313rem;
+  margin-bottom: 1.25rem;
+}
+
+.login-btn:focus {
+  outline: 0;
+}
+
+.login-btn:active {
+  transform: scale(0.98);
+}
+
+.text {
+  margin-top: 0.938rem;
+}
+
+.form-control {
+  position: relative;
+  margin: 1.25rem 0 2.5rem;
+}
+
+.form-control input {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px #fff solid;
+  display: block;
+  width: 100%;
+  padding: 1.25rem 0;
+  font-size: 2.125rem;
+  color: #fff;
+  margin-bottom: 5rem !important;
+  /* display:none; */
+ 
+}
+.login-form{
+.form-control input:-webkit-autofill,
+.form-control input:-webkit-autofill:hover, 
+.form-control input:-webkit-autofill:focus, 
+.form-control input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px #1b1a1a inset !important;
+  /* font-size: 4rem; */
+  -webkit-text-fill-color: white;
+  padding-top: 10px;
+}
+
+.form-control input:focus {
+  outline: 0;
+  border-bottom-color: #c2c25a;
+}
+
+.form-control label {
+  position: absolute;
+  top: 0.938rem;
+  left: 10;
+}
+
+.form-control label span {
+  display: inline-block;
+  font-size: 2.125rem;
+  min-width: 0.313rem;
+  transition: 0.3s cubic-bezier(0.53, 0.246, 0.265, 1.66);
+}
+
+.form-control input:focus+label span,
+.form-control input:valid+label span {
+  color: #c2c25a;
+  transform: translateY(-2.875rem);
+}

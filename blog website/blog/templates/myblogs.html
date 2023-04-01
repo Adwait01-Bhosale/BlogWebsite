@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <link rel="stylesheet" href="{% static 'css/login.css' %}" />
     {% comment %}
-    <link rel="stylesheet" href="{% static 'css/newblog.css' %}" />
+    <!-- <link rel="stylesheet" href="{% static 'css/newblog.css' %}" /> -->
     {% endcomment %}
   </head>
   <body>
@@ -87,7 +87,7 @@
     <!-- header section ends -->
 
     <!-- banner section starts  -->
-    <section class="banner" id="banner">
+    <!-- <section class="banner" id="banner">
       {% if messages %} {% for message in messages %}
       <div class="msg-container">
         <div class="inner-container">
@@ -107,9 +107,9 @@
         <p>
           Discover stories, thinking, and expertise from writers on any topic.
         </p>
-        <a href="{% url 'myblogs' %}" class="btn">my blogs</a>
+        <a href="#" class="btn">my blogs</a>
       </div>
-    </section>
+    </section> -->
 
     <!-- banner section ends -->
 
@@ -154,67 +154,8 @@
 
     <!-- posts section ends -->
 
-    <!-- contact section starts  -->
 
-    <section class="contact" id="contact">
-      <form method="POST">
-        {% csrf_token %}
-        <h3>contact us</h3>
-        <div class="inputBoxContainer">
-        <div class="inputBox">
-          {% comment %} <input type="text" name="contact_name" placeholder="name" required /> {% endcomment %}
-          <input
-            type="email"
-            name="contact_email"
-            placeholder="email"
-            required
-          />
-        </div>
-        <div class="inputBox">
-          <!-- <input
-            type="number"
-            name="contact_number"
-            placeholder="number"
-            required
-          /> -->
-          <input
-            type="text"
-            name="contact_subject"
-            placeholder="subject"
-            required
-          />
-        </div>
-      </div>
-        <textarea
-          name="contact_message"
-          placeholder="message"
-          id=""
-          cols="30"
-          rows="10"
-          required
-        ></textarea>
-        <input type="submit" value="Send message" class="btn submit-btn" />
-      </form>
-    </section>
 
-    <!-- contact section ends -->
-
-    <!-- footer section starts  -->
-
-    <!-- <section class="footer">
-      <div class="follow">
-        <a href="#" class="fab fa-facebook-f"></a>
-        <a href="#" class="fab fa-twitter"></a>
-        <a href="#" class="fab fa-instagram"></a>
-        <a href="#" class="fab fa-linkedin"></a>
-      </div>
-
-      <div class="credit">
-        created by <span>TY IT Group 4</span> | all rights reserved
-      </div>
-    </section> -->
-
-    <!-- footer section ends -->
 
     <!-- custom js file link  -->
     <script src="{% static 'js/script.js' %}"></script>
