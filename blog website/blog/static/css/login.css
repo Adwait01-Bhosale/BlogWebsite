@@ -112,27 +112,34 @@ body {
 }
 
 .form-control input {
-  background: transparent;
+  /* background: transparent; */
   border: 0;
   border-bottom: 1px #fff solid;
   display: block;
   width: 100%;
-  padding: 1.25rem 0;
-  font-size: 2.125rem;
-  color: #fff;
+  padding: 1.25rem 1rem;
+  font-size: 1.425rem;
+  color: black;
   margin-bottom: 5rem !important;
+  /* padding:5px; */
   /* display:none; */
  
 }
-.login-form{
-.form-control input:-webkit-autofill,
+.form-control input:hover{
+  background-color:white;
+
+}
+
+ol input:-webkit-autofill,
 .form-control input:-webkit-autofill:hover, 
 .form-control input:-webkit-autofill:focus, 
 .form-control input:-webkit-autofill:active{
-    -webkit-box-shadow: 0 0 0 30px #1b1a1a inset !important;
+    /* -webkit-box-shadow: 0 0 0 30px #1b1a1a inset !important; */
   /* font-size: 4rem; */
-  -webkit-text-fill-color: white;
+  -webkit-text-fill-color: black;
+  background-color:white;
   padding-top: 10px;
+  /* color:black; */
 }
 
 .form-control input:focus {
@@ -144,6 +151,10 @@ body {
   position: absolute;
   top: 0.938rem;
   left: 10;
+  /* pointer-events: none; */
+  transform: translateY(-3.875rem);
+
+  color:gray;
 }
 
 .form-control label span {
@@ -153,8 +164,8 @@ body {
   transition: 0.3s cubic-bezier(0.53, 0.246, 0.265, 1.66);
 }
 
-.form-control input:focus+label span,
-.form-control input:valid+label span {
+.form-control input label ,
+.form-control input label {
   color: #c2c25a;
-  transform: translateY(-2.875rem);
+  transform: translateY(-3.875rem);
 }

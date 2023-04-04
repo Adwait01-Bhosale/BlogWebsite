@@ -8,6 +8,10 @@ from django.contrib.auth import authenticate,login, logout
 from utils.decorator import login_required_message
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordResetView
+from django.contrib.messages.views import SuccessMessageMixin
+
 
 class my_dictionary(dict):
  
@@ -18,6 +22,16 @@ class my_dictionary(dict):
   # Function to add key:value
   def add(self, key, value):
     self[key] = value
+
+class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
+    template_name = 'registrations/password_reset.html'
+    email_template_name = 'registrations/password_reset_email.html'
+    subject_template_name = 'password_reset_subject'
+    success_message = "We've emailed you instructions for setting your password, " \
+                      "if an account exists with the email you entered. You should receive them shortly." \
+                      " If you don't receive an email, " \
+                      "please make sure you've entered the address you registered with, and check your spam folder."
+    success_url = reverse_lazy('users-home')
 
 @login_required
 def newblog(request):
@@ -46,7 +60,6 @@ def home(request):
         contact_subject=request.POST['contact_subject']
         contact_message=request.POST['contact_message']
 
-        print(contact_email, contact_number, contact_subject, contact_message)
         user=request.user
         cont=ContactDetailsData(name=request.user, email=contact_email, number=contact_number, subject=contact_subject, message=contact_message, user=user)
         cont.save()
@@ -57,13 +70,11 @@ def home(request):
     
     for user in users:
         if request.user.is_authenticated:
-            content_data = BlogData.objects.filter(user=request.user).values_list('content')
-            # print(request.user)
+            content_data = BlogData.objects.order_by('submitted_on').values_list('content')[:4]
             context_blog_data=[]
             for i in range (len(content_data)):
                 context_blog_data.append(content_data[i])
             
-            print(len(context_blog_data))
             title_data = BlogData.objects.values_list('title')
             context_blog_title=[]
             
@@ -120,4 +131,55 @@ def change_password(request):
     
     
 def myblogs(request):
+    
+    users = Account.objects.filter(is_admin=False).values('fullname', 'id')
+    users = list(users)
+    
+    for user in users:
+        if request.user.is_authenticated:
+            
+            content_data = BlogData.objects.order_by('submitted_on').values_list('content')
+            # print(request.user)
+            print(content_data)
+            context_blog_data=[]
+            for i in range (len(content_data)):
+                context_blog_data.append(content_data[i])
+            
+            print(len(context_blog_data))
+            title_data = BlogData.objects.values_list('title')
+            context_blog_title=[]
+            
+            for i in range (len(title_data)):
+                context_blog_title.append(title_data[i])
+            
+            blog_title_dict=my_dictionary()            
+            
+            user['show'] = True            
+
+            for i in range(len(context_blog_data)):
+                if i==4:
+                    break
+                else:
+                    blog_title_dict.add(context_blog_title[i][0], context_blog_data[i][0])
+            
+            print(len(blog_title_dict))
+            print(blog_title_dict)
+           
+            
+            return render(request, 'home.html', context={'blog_data':blog_title_dict,
+                                                         'admin':request.user})
+        else:
+            user['show'] = False
+            user['content'] = "Add some Content for the blog!"
+    
+    if request.user.is_authenticated:
+        print("Logged in!!")
+        mydata = BlogData.objects.filter(user=request.user).values()
+        print(mydata)
+    else:
+        print("Not logged in!")
     return render(request,"myblogs.html")
+
+
+# def forgot_password(request):
+#     return render(request, 'registrations/password_reset.html')

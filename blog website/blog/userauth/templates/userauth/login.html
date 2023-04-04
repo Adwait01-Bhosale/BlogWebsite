@@ -53,7 +53,7 @@
       </form>
     </header>
     <div class="login-form-bd">
-      {% comment %} {% if messages %}
+    {% if messages %}
         
     {% for message in messages %}
     <div class="msg-container">
@@ -69,17 +69,12 @@
       </div>     
     </div>
     {% endfor %}
-  {% endif %} {% endcomment %}
+  {% endif %}
       <div class="form-wrapper">
         <div class="form-container">
           <h1>Login</h1>
-          <form method="POST" autocomplete="nop" class="login-form">
+          <form method="POST" autocomplete="nope" class="login-form">
             {% csrf_token %}
-
-            {% comment %} <div class="form-control">
-              <input type="text" name="login_username" required autocomplete="off" />
-              <label> Username</label>
-            </div> {% endcomment %}
 
             <div class="form-control">
               <input type="text" name="login_email" required />
@@ -93,6 +88,9 @@
             <button class="login-btn">Login</button>
             <p class="text">
               Don't have an account? <a href="{% url 'signup' %}"> Register</a>
+            </p>
+            <p class="text">
+              <a href="{% url 'password_reset' %}">Forgot Password?</a>
             </p>
           </form>
         </div>

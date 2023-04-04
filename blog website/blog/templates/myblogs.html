@@ -64,52 +64,46 @@
 
         {% endif %}
       </nav>
-
-      {% comment %}
-      <div class="icons">
-        <i class="fas fa-bars" id="menu-bars"></i>
-        <i class="fas fa-search" id="search-icon"></i>
-      </div>
-      {% endcomment %}
-
-      <!-- <form action="" class="search-form"> -->
-      {% comment %}
-      <input
-        type="search"
-        name=""
-        placeholder="search here..."
-        id="search-box"
-      />
-      <label for="search-box" class="fas fa-search"></label> {% endcomment %}
-      <!-- </form> -->
     </header>
 
-    <!-- header section ends -->
+    <section class="container" id="posts">
+      <div class="posts-container">
 
-    <!-- banner section starts  -->
-    <!-- <section class="banner" id="banner">
-      {% if messages %} {% for message in messages %}
-      <div class="msg-container">
-        <div class="inner-container">
-          <span class="">
-            <i class="fas fa-bell"></i>
-            {{ message }}
-          </span>
-          <button class="cross-btn" onclick="closeAlert(event)">
-            <span>&times;</span>
-          </button>
+        {% for title, body in blog_data.items %}
+        <div class="post">
+          <!-- <img src="images/blog-1.jpg" alt="" class="image"> -->
+          <img src="https://picsum.photos/300/201" alt="" class="image" />
+
+          <div class="date">
+            <i class="far fa-clock"></i>
+            <span>1st may, 2021</span>
+          </div>
+          <h3 class="title">
+            {{ title }}
+          </h3>
+          <p class="text">
+            {{ body }}
+          </p>
+          <div class="links">
+            <a href="#" class="user">
+              <i class="far fa-user"></i>
+              <span>by {{ admin }}</span>
+            </a>
+            <a href="#" class="icon">
+              <i class="far fa-comment"></i>
+              <span>(45)</span>
+            </a>
+            <a href="#" class="icon">
+              <i class="far fa-share-square"></i>
+              <span>(29)</span>
+            </a>
+          </div>
         </div>
-      </div>
-      {% endfor %} {% endif %}
 
-      <div class="content">
-        <h3>Welcome to the Blog Website</h3>
-        <p>
-          Discover stories, thinking, and expertise from writers on any topic.
-        </p>
-        <a href="#" class="btn">my blogs</a>
-      </div>
-    </section> -->
+        {% endfor %}
+    </section>
+
+   
 
     <!-- banner section ends -->
 

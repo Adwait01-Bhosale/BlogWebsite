@@ -8,4 +8,5 @@ urlpatterns = [
     path('newblog',newblog,name='newblog'),
     path('dashboard',dashboard,name='dashboard'),
     path("change_password", change_password, name="change_password"),
+    path('password-reset', ResetPasswordView.as_view(), name='password_reset'),
 ]
