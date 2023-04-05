@@ -3,3 +3,4 @@ from .models import *
 
 admin.site.register(BlogData)
 admin.site.register(ContactDetailsData)
+admin.site.register(profileData)

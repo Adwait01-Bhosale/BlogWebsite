@@ -23,8 +23,8 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <link rel="stylesheet" href="{% static 'css/login.css' %}" />
     {% comment %}
-    <link rel="stylesheet" href="{% static 'css/newblog.css' %}" />
     {% endcomment %}
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
   </head>
   <body>
     <!-- header section starts  -->
@@ -64,6 +64,47 @@
         {% endif %}
       </nav>
     </header>
+    <section class="dashboard-outer">
+      <div class="show-details">
+        <h1>Profile</h1>
+        <p> Name: {{ name }}</p>
+        <p> DOB: {{ dob }}</p>
+        <p> Domain: {{ domain }}</p>
+        <p> College / Company Name: {{ college_company }}</p>
+      </div>
+    <form method="post">
+      {% csrf_token %}
+      <!-- {{ form }} -->
+      <div class="form-div">
+        <h1>Add your Personal Details here !!!</h1>
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          required
+        />
+        <input
+          type="text"
+          name="dob"
+          placeholder="Date Of Birth"
+          required
+        />
+        <input
+          type="text"
+          name="domain_of_interest"
+          placeholder="Domain"
+          required
+        />
+        <input
+          type="text"
+          name="college_company"
+          placeholder="College / Company Name"
+          required
+        />
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </section>
 
   </body>
 </html>

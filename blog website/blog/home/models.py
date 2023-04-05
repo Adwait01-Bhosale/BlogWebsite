@@ -29,3 +29,14 @@ class ContactDetailsData(models.Model):
     
     def __str__(self):
         return self.name + self.submitted_on.strftime(f" - [%d %B %Y]")
+    
+class profileData(models.Model):
+    name = models.CharField(max_length=100, null=True)
+    domain_of_interest=models.CharField(max_length=100, null=True)
+    dob=models.CharField(max_length=10, null=True)
+    college_company=models.CharField(max_length=100, null=True)
+    submitted_on = models.DateTimeField(default=timezone.now)
+    user = models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
+    
+    def __str__(self):
+        return self.name + self.submitted_on.strftime(f" - [%d %B %Y]")

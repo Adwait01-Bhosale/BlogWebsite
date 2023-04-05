@@ -88,11 +88,7 @@ def home(request):
 
             for i in range(len(context_blog_data)):
                 blog_title_dict.add(context_blog_title[i][0], context_blog_data[i][0])
-            
-            print(len(blog_title_dict))
-            print(blog_title_dict)
-           
-            
+
             return render(request, 'home.html', context={'blog_data':blog_title_dict,
                                                          'admin':request.user})
         else:
@@ -110,6 +106,24 @@ def home(request):
 
 
 def dashboard(request):
+    
+    if request.method=="POST":
+        print("Dashboard POST method IF entry")
+        name=request.POST.get('name')
+        domain=request.POST.get('domain_of_interest')
+        dob=request.POST.get('dob')
+        college_company=request.POST.get('college_company')
+
+        user=request.user
+        profile=profileData(name=name,domain_of_interest=domain, dob=dob, college_company=college_company, user=user)
+        profile.save()
+        return render(request,'dashboard.html', context={'name':name,
+                                                         'domain':domain,
+                                                         'dob':dob,
+                                                         'college_company':college_company})
+    else:
+        print("Entered ELSE!")
+    
     return render(request, 'dashboard.html')
 
 @login_required
@@ -129,7 +143,7 @@ def change_password(request):
         'form': form
     })
     
-    
+
 def myblogs(request):
     
     users = Account.objects.filter(is_admin=False).values('fullname', 'id')
@@ -140,7 +154,7 @@ def myblogs(request):
             
             content_data = BlogData.objects.order_by('submitted_on').values_list('content')
             # print(request.user)
-            print(content_data)
+            # print(content_data)
             context_blog_data=[]
             for i in range (len(content_data)):
                 context_blog_data.append(content_data[i])
@@ -161,11 +175,6 @@ def myblogs(request):
                     break
                 else:
                     blog_title_dict.add(context_blog_title[i][0], context_blog_data[i][0])
-            
-            print(len(blog_title_dict))
-            print(blog_title_dict)
-           
-            
             return render(request, 'home.html', context={'blog_data':blog_title_dict,
                                                          'admin':request.user})
         else:
