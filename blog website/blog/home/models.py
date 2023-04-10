@@ -3,8 +3,8 @@ from froala_editor.fields import FroalaField
 from userauth.models import Account
 from django.utils import timezone
 
-# Create your models here.
-
+from django.conf import settings
+User = settings.AUTH_USER_MODEL
 
 class BlogData(models.Model):
     author=models.CharField(max_length=1000, null=True)
@@ -18,9 +18,7 @@ class BlogData(models.Model):
         return str(self.user) + str(self.submitted_on.strftime(f" - [%d %B %Y]"))
 
 class ContactDetailsData(models.Model):
-    name=models.CharField(max_length=200, null=True)
     email=models.CharField(max_length=100, null=True)
-    number=models.IntegerField(null=True)
     subject=models.CharField(max_length=100, null=True)
     message=models.CharField(max_length=500, null=True)
     submitted_on = models.DateTimeField(default=timezone.now)
@@ -28,7 +26,7 @@ class ContactDetailsData(models.Model):
     user = models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
     
     def __str__(self):
-        return self.name + self.submitted_on.strftime(f" - [%d %B %Y]")
+        return str(self.user) + self.submitted_on.strftime(f" - [%d %B %Y]")
     
 class profileData(models.Model):
     name = models.CharField(max_length=100, null=True)
@@ -40,3 +38,20 @@ class profileData(models.Model):
     
     def __str__(self):
         return self.name + self.submitted_on.strftime(f" - [%d %B %Y]")
+    
+    
+
+class Profile(models.Model):
+    user=models.OneToOneField(User, on_delete=models.CASCADE)
+    forget_password_token=models.CharField(max_length=100)
+    created_at=models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.user.username
+
+class individualsData(models.Model):
+    user=models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(default='default.jpeg', upload_to='media/profile_pics')
+    
+    def __str__(self):
+        return f'{self.user.fullname} Profile'

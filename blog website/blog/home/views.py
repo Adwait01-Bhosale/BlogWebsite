@@ -14,7 +14,6 @@ from django.contrib.messages.views import SuccessMessageMixin
 
 
 class my_dictionary(dict):
- 
   # __init__ function
   def __init__(self):
     self = dict()
@@ -35,7 +34,7 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
 
 @login_required
 def newblog(request):
-    
+
     if request.method == "POST":
         print("entered in IF")
         # author_name = request.POST['author']
@@ -45,7 +44,6 @@ def newblog(request):
         user=request.user
         ins=BlogData(author=user.fullname,title=title, content=content, created_at=datetime.today(), user=request.user)
         ins.save()
-        # print("Data Saved!!!")
     
     return render(request, 'newblog.html')
 
@@ -55,13 +53,14 @@ def home(request):
         print("Entered in IF!!!!!")
         
         # contact_name=request.POST['contact_name']
-        contact_email=request.POST['contact_email']
-        contact_number=request.POST['contact_number']
-        contact_subject=request.POST['contact_subject']
-        contact_message=request.POST['contact_message']
+        contact_email=request.POST.get('contact_email')
+        contact_subject=request.POST.get('contact_subject')
+        contact_message=request.POST.get('contact_message')
 
+        print(f"Email: {contact_email}")
+        print(f"Subject: {contact_subject}")
         user=request.user
-        cont=ContactDetailsData(name=request.user, email=contact_email, number=contact_number, subject=contact_subject, message=contact_message, user=user)
+        cont=ContactDetailsData(email=contact_email,subject=contact_subject, message=contact_message, user=user)
         cont.save()
         return redirect('home')
     
@@ -70,11 +69,20 @@ def home(request):
     
     for user in users:
         if request.user.is_authenticated:
+            
+            user_name=Account.objects.values_list('fullname')
+            
+            for names in user_name:
+                if str(request.user) == names[0]:
+                    print(names[0])
+            
+            # print(request.user)
             content_data = BlogData.objects.order_by('submitted_on').values_list('content')[:4]
             context_blog_data=[]
+            
             for i in range (len(content_data)):
                 context_blog_data.append(content_data[i])
-            
+
             title_data = BlogData.objects.values_list('title')
             context_blog_title=[]
             
@@ -114,17 +122,22 @@ def dashboard(request):
         dob=request.POST.get('dob')
         college_company=request.POST.get('college_company')
 
+        print("Check -----------------------------")
+        
         user=request.user
         profile=profileData(name=name,domain_of_interest=domain, dob=dob, college_company=college_company, user=user)
         profile.save()
-        return render(request,'dashboard.html', context={'name':name,
-                                                         'domain':domain,
-                                                         'dob':dob,
-                                                         'college_company':college_company})
+        
+        
+        return render(request,'profile.html')
     else:
-        print("Entered ELSE!")
+        
+        images=individualsData.objects.all()
+        urls=images.values_list('image', flat=True)
+        print(f"Images -------- {urls[0]}")
+        return render(request,'profile.html', context={'images':"media/"+urls[0]})
     
-    return render(request, 'dashboard.html')
+    return render(request, 'profile.html')
 
 @login_required
 def change_password(request):
@@ -189,6 +202,3 @@ def myblogs(request):
         print("Not logged in!")
     return render(request,"myblogs.html")
 
-
-# def forgot_password(request):
-#     return render(request, 'registrations/password_reset.html')

@@ -59,7 +59,7 @@ INSTALLED_APPS = [
 ]
 CRISPY_TEMPLATE_PACK = 'uni_form'
 
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 
 MIDDLEWARE = [
@@ -144,7 +144,11 @@ LOGIN_URL = '/auth/login/'
 
 AUTH_USER_MODEL = 'userauth.Account'
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR , "static"),
 ]

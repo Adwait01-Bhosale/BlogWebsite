@@ -32,7 +32,7 @@ def signup(request):
         data = request.POST
         fullname = data['signup_fullname']
         email = data['signup_email']
-
+        domain=data['domain']
         password = data['signup_pass']
         password2 = data['signup_pass2']
         if password == password2:
@@ -40,7 +40,7 @@ def signup(request):
                 messages.info(request, 'Email already in use. Please use another email.')
                 return redirect('signup')
             else:
-                user=Account.objects.create_user(fullname=fullname, email=email, password=password)
+                user=Account.objects.create_user(fullname=fullname, email=email, domain=domain, password=password)
                 user.save()
                 login(request, user)
                 messages.info(request, 'Account created successfully.')

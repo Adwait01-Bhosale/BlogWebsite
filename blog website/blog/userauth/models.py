@@ -30,6 +30,7 @@ class MyAccountManager(BaseUserManager):
 class Account(AbstractBaseUser):
     email           = models.EmailField(max_length=50, unique =True, null=True)
     fullname        = models.CharField(max_length=20, null=True)
+    domain          = models.CharField(max_length=20, null=True)
     is_admin        = models.BooleanField(default=False, null=True)
     is_active       = models.BooleanField(default=True,null=True)
     is_staff        = models.BooleanField(default=False,null=True)
