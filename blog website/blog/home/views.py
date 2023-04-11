@@ -11,7 +11,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
-
+from home.forms import ImageForm
 
 class my_dictionary(dict):
   # __init__ function
@@ -51,8 +51,7 @@ def home(request):
     
     if request.method=="POST":
         print("Entered in IF!!!!!")
-        
-        # contact_name=request.POST['contact_name']
+
         contact_email=request.POST.get('contact_email')
         contact_subject=request.POST.get('contact_subject')
         contact_message=request.POST.get('contact_message')
@@ -92,7 +91,7 @@ def home(request):
             blog_title_dict=my_dictionary()            
             
             
-            user['show'] = True            
+            user['show'] = True
 
             for i in range(len(context_blog_data)):
                 blog_title_dict.add(context_blog_title[i][0], context_blog_data[i][0])
@@ -132,12 +131,63 @@ def dashboard(request):
         return render(request,'profile.html')
     else:
         
-        images=individualsData.objects.all()
-        urls=images.values_list('image', flat=True)
-        print(f"Images -------- {urls[0]}")
-        return render(request,'profile.html', context={'images':"media/"+urls[0]})
+        if request.user.is_authenticated:
+            images=individualsData.objects.all()
+            # urls=images.values_list('image',flat=True)
+  
+            
+            list_users=individualsData.objects.values_list(flat=True)
+            image_path=""
+            users_doi=""
+            
+            new_list_users=Image.objects.values_list(flat=True)
+            print(f"New list of users is: {new_list_users[0]}")
+            
+            for new_users in new_list_users:
+                user_name=Image.objects.get(id=new_users).user
+                print(f"Name of New users is: {user_name}")
+                users_doi=Account.objects.get(fullname=request.user).domain
+                
+                if str(request.user) == str(user_name):
+                    # print("Yesss You are innn!!")
+                    image_path=Image.objects.get(id=new_users).img
+                    print(f"Domain of Interest: {users_doi}")
+                    print(f"Logged in users image path is: {user_name} {image_path}")
+                    break
+            
+            # for users in list_users:
+            #     user_name=individualsData.objects.get(id=users).user
+            #     users_doi=Account.objects.get(fullname=request.user).domain
+            #     if str(request.user) == str(user_name):
+            #         # print("Yesss You are innn!!")
+            #         image_path=individualsData.objects.get(id=users).image
+            #         print(f"Domain of Interest: {users_doi}")
+            #         print(f"Logged in users image path is: {user_name} {image_path}")
+            #         break
+            #     else:
+            #         # print("Oooppppss!!!")
+            #         pass
+
+            return render(request,'profile.html', context={'images':"media/"+str(image_path),
+                                                           'domain_of_interest':users_doi})
     
     return render(request, 'profile.html')
+
+def upload_image(request):
+    try:
+        if request.method == 'POST':
+            form = ImageForm(request.POST, request.FILES)
+
+            if form.is_valid():
+                profile=form.save(commit=False)
+                profile.user=request.user
+                profile.save()
+                return render(request, "home.html", {"form": form}) 
+        else:
+            form = ImageForm()
+    except:
+        messages.info(request, 'You can upload image only once!')
+    return render(request, "upload_image.html", {"form": form}) 
 
 @login_required
 def change_password(request):

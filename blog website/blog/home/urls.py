@@ -13,7 +13,7 @@ urlpatterns = [
     path('dashboard',dashboard,name='dashboard'),
     path("change_password", change_password, name="change_password"),
     path("profile", dashboard, name="profile"),
-    
+    path('image_request',upload_image, name="image_upload"),
     
     path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),

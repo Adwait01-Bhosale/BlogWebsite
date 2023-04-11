@@ -5,16 +5,15 @@
       <div class="media">
         {% comment %} <img class="rounded-circle account-img" src=`{{ user.profile.image.url }}`> {% endcomment %}
         <img class="rounded-circle account-img" src="{{ images }}">
-
+        
         <div class="media-body">
-          <h2 class="account-heading">{{ user.fullname }}</h2>
-          <p class="text-secondary">{{ user.email }}</p>
+          <h1>Profile Details</h1>
+          <h2 class="account-heading">Full Name: {{ user.fullname }}</h2>
+          <p class="text-secondary account-heading">Email: {{ user.email }}</p>
+          <p class="text-secondary account-heading">Domain for blogs: {{ domain_of_interest }}</p>
+
         </div>
       </div>
       <!-- FORM HERE -->
     </div>
-    <script>
-      {% comment %} console.log(user.profile.image.url) {% endcomment %}
-      console.log({{ user }})
-    </script>
 {% endblock content %}

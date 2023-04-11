@@ -26,7 +26,7 @@
 
 
     <header class="header">
-      <a href="#" class="logo"><span>b</span>logger</a>
+      <a href="/" class="logo"><span>b</span>logger</a>
 
       <form action="" method="POST" class="search-form">
         {% csrf_token %}
@@ -60,7 +60,7 @@
       <div class="form-wrapper">
         <div class="form-container">
           <h1>Login</h1>
-          <form method="POST" autocomplete="nope" class="login-form">
+          <form method="POST"  class="login-form">
             {% csrf_token %}
 
             <div class="form-control">
@@ -72,7 +72,7 @@
               <input type="password" name="login_pass" required />
               <label> Password</label>
             </div>
-            <button class="login-btn">Login</button>
+            <button class="login-btn">Log in</button>
             <p class="text">
               Don't have an account? <a href="{% url 'signup' %}"> Register</a>
             </p>

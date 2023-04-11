@@ -49,9 +49,16 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
+class Image(models.Model):
+    user=models.OneToOneField(User, on_delete=models.CASCADE, unique=False)
+    img = models.ImageField(upload_to='profile_pics/', default=None, null=True, unique=False)
+    
+    def __str__(self):
+        return f'{self.user.fullname} Image'
+
 class individualsData(models.Model):
     user=models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(default='default.jpeg', upload_to='media/profile_pics')
+    image = models.ImageField(default='default.jpeg', upload_to='profile_pics/')
     
     def __str__(self):
         return f'{self.user.fullname} Profile'
