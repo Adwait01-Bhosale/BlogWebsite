@@ -21,6 +21,15 @@ class my_dictionary(dict):
   # Function to add key:value
   def add(self, key, value):
     self[key] = value
+    
+    
+def add_values_in_dict(sample_dict, key, list_of_values):
+    ''' Append multiple values to a key in 
+        the given dictionary '''
+    if key not in sample_dict:
+        sample_dict[key] = list()
+    sample_dict[key].extend(list_of_values)
+    return sample_dict
 
 class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     template_name = 'registrations/password_reset.html'
@@ -37,12 +46,13 @@ def newblog(request):
 
     if request.method == "POST":
         print("entered in IF")
-        # author_name = request.POST['author']
+        author_name = request.POST['authorname']
+        domain=request.POST['domain']
         title = request.POST['title']
         content = request.POST['content']
         # print(author_name, title, content, datetime.today())
         user=request.user
-        ins=BlogData(author=user.fullname,title=title, content=content, created_at=datetime.today(), user=request.user)
+        ins=BlogData(author=author_name, title=title, domain=domain ,content=content, created_at=datetime.today(), user=request.user)
         ins.save()
     
     return render(request, 'newblog.html')
@@ -72,8 +82,8 @@ def home(request):
             user_name=Account.objects.values_list('fullname')
             
             for names in user_name:
-                if str(request.user) == names[0]:
-                    print(names[0])
+                if str(request.user) == str(names[0]):
+                    print(f"The name of the user is: {names[0]}")
             
             # print(request.user)
             content_data = BlogData.objects.order_by('submitted_on').values_list('content')[:4]
@@ -81,6 +91,8 @@ def home(request):
             
             for i in range (len(content_data)):
                 context_blog_data.append(content_data[i])
+                
+            # print(f"Blogs data is: {context_blog_data}")
 
             title_data = BlogData.objects.values_list('title')
             context_blog_title=[]
@@ -88,7 +100,43 @@ def home(request):
             for i in range (len(title_data)):
                 context_blog_title.append(title_data[i])
             
-            blog_title_dict=my_dictionary()            
+            blog_title_dict=my_dictionary()
+            
+            content_author_dict={}
+            
+            # for i in range(len(title_data)):
+            #     content_blog_authors=BlogData.objects.get(content=context_blog_data[i][0]).author
+            #     print(f"Name of the author is: {content_blog_authors}")
+                
+            #     author_blog_content=BlogData.objects.get(author=content_blog_authors).content
+                
+            #     print("-------------------------")
+            #     print(author_blog_content)
+                # content_blog_title=BlogData.objects.get(content=author_blog_content[i]).title
+                # print("-------------------")
+                # print(f"This is the title of respective blog content: {content_blog_title}")
+                # content_author_dict=add_values_in_dict(content_author_dict,content_blog_authors,[content_blog_title, author_blog_content])
+                
+            # content_blog_authors=BlogData.objects.get(content=context_blog_data[0][0]).author
+            # author_blog_content=BlogData.objects.get(author=content_blog_authors).content
+            
+            # print("------------------------")
+            
+            print(f"Final dictionary of authors and their content: {content_author_dict}")
+            
+            # print("---------------------------")
+            
+            # print(f"Check the author name: {content_blog_authors}")
+            
+            print("------------------------")
+            # print(f"Checking the values in the dictionary {content_author_dict.items()}")
+            
+            for key,vals in content_author_dict.items():
+                for i in range(len(content_author_dict)):
+                    print(f"Key is: {key}")
+                    print(f"Title: {vals[0]}")
+                    print(f"Desc: {vals[1]}")
+            
             
             
             user['show'] = True
@@ -96,8 +144,7 @@ def home(request):
             for i in range(len(context_blog_data)):
                 blog_title_dict.add(context_blog_title[i][0], context_blog_data[i][0])
 
-            return render(request, 'home.html', context={'blog_data':blog_title_dict,
-                                                         'admin':request.user})
+            return render(request, 'home.html', context={'blog_data':blog_title_dict})
         else:
             user['show'] = False
             user['content'] = "Add some Content for the blog!"
@@ -197,7 +244,7 @@ def change_password(request):
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
             messages.success(request, 'Your password was successfully updated!')
-            return redirect('change_password')
+            return redirect('home')
         else:
             messages.error(request, 'Please correct the error below.')
     else:
@@ -216,9 +263,8 @@ def myblogs(request):
         if request.user.is_authenticated:
             
             content_data = BlogData.objects.order_by('submitted_on').values_list('content')
-            # print(request.user)
-            # print(content_data)
             context_blog_data=[]
+            
             for i in range (len(content_data)):
                 context_blog_data.append(content_data[i])
             

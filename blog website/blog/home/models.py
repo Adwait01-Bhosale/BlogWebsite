@@ -8,6 +8,7 @@ User = settings.AUTH_USER_MODEL
 
 class BlogData(models.Model):
     author=models.CharField(max_length=1000, null=True)
+    domain=models.CharField(max_length=20, null=True)
     title=models.CharField(max_length=100, null=True)
     content=models.CharField(max_length=10000, null=True)
     created_at=models.DateTimeField(auto_now_add=True, null=True)

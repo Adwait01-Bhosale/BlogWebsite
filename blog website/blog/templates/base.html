@@ -25,9 +25,10 @@
       <a href="/" class="logo"><span>b</span>logger</a>
 
       <nav class="navbar">
-        <a href="{% url 'dashboard' %}">Dashboard</a>
+        {% comment %} <a href="{% url 'dashboard' %}">Dashboard</a> {% endcomment %}
         <a href="{% url 'home' %}">Blogs</a>
         <a href="{% url 'image_upload' %}">profile image</a>
+        <a href="{% url 'change_password' %}">Change Password</a>
         {% comment %} <a href="newblog">New Blog</a> {% endcomment %}
 
         {% if user.is_authenticated %}
